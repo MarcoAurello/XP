@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Desafio 1</title>
+    <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="./css/main.css">
+</head>
+
+<body>
+    <header>
+        <section class="main">
+            <div id="loading-overlay">
+                <div id="loading-spinner"></div>
+            </div>
+            <h1>Produtos</h1>
+            <div class="marca-filtro" style="margin-left: 10%;">
+                <table>
+                    <tr>
+                        <td style="width: 250px;">
+                            <label for="marca-select" style="font-size: 20px; border-radius: 5px; color:#ccc;">Filtrar
+                                por Marca:</label>
+                            <select id="marca-select"
+                                style="padding: 10px; font-size: 16px; border-radius: 5px; border: 1px solid #ccc;">
+                                <option value="todos">Todas</option>
+                                <!-- Opções de marcas serão inseridas aqui via JavaScript -->
+                            </select>
+                        </td>
+                        <td style="width: 250px;">
+                            <label for="tipo-produto-select"
+                                style="font-size: 20px; border-radius: 5px; color:#ccc;">Filtrar por Tipo de
+                                Produto:</label>
+                            <select id="tipo-produto-select"
+                                style="padding: 10px; font-size: 16px; border-radius: 5px; border: 1px solid #ccc;">
+                                <option value="todos">Todos</option>
+                                <!-- Opções de tipos de produtos serão inseridas aqui via JavaScript -->
+                            </select>
+                        </td>
+                        <td style="width: 250px;">
+                            <label for="ordenar-por" style="font-size: 20px; border-radius: 5px;  color:#ccc;">Ordenar
+                                por:</label>
+                            <select id="ordenar-por"
+                                style="padding: 10px; font-size: 16px; border-radius: 5px; border: 1px solid #ccc;">
+                                <option value="desc-price">Preço Maior para menor</option>
+                                <option value="asc-price">Preço Menor para Maior</option>
+                                <option value="asc-name">Nome (A-Z)</option>
+                                <option value="desc-name">Nome (Z-A)</option>
+                            </select>
+                        </td>
+                        <td style="width: 250px;">
+                            <input type="text" id="search-input" placeholder="Qual produto você procura?"
+                                style="width: 100%; padding: 10px; font-size: 16px; border-radius: 5px; border: 1px solid #ccc;">
+                        </td
+                        
+                    </tr>
+                </table>
+            </div>
+        </section>
+    </header>
+    <div id="json-data" class="container">
+        <!-- Divs serão criadas aqui via JavaScript -->
+    </div>
+    <div id="popup" class="popup">
+        <div class="popup-content">
+            <span id="close-popup" class="close-popup">&times;</span>
+            <h2 id="popup-title"></h2>
+            <p><strong>Bading:</strong> <span id="popup-brand" style="background-color: darkorchid; padding: 10px, 2px, 10px, 2px;" ></span></p>
+            <p><strong>Price:</strong><span id="popup-price" style="background-color: darkorchid; padding: 10px, 2px, 10px, 2px;" ></span></p>
+            <p><strong>Rating:</strong><span id="popup-price" style="background-color: darkorchid; padding: 10px, 2px, 10px, 2px;" ></span></p>
+            <p><strong>Category:</strong><span id="popup-price" style="background-color: darkorchid; padding: 10px, 2px, 10px, 2px;" ></span></p>
+            <p><strong>Product_type:</strong><span id="popup-price" style="background-color: darkorchid; padding: 10px, 2px, 10px, 2px;" ></span></p>
+            <!-- Adicione aqui outras informações do produto, se necessário -->
+        </div>
+    </div>
+    <script src="script5.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const produtosContainer = document.getElementById('json-data');
+            let displayedProducts = [];
+
+            let distsance
+            function openPopup(product) {
+                const popup = document.getElementById('popup');
+                const popupTitle = document.getElementById('popup-title');
+                const popupBrand = document.getElementById('popup-brand');
+                const popupPrice = document.getElementById('popup-price');
+
+                popupTitle.textContent = product.name;
+                popupBrand.textContent = product.brand;
+                popupPrice.textContent = `R$ ${product.price * 5.5}`;
+
+                popup.style.display = 'block';
+            }
+
+            produtosContainer.addEventListener('click', event => {
+                const clickedElement = event.target;
+                const productItem = clickedElement.closest('.produtos-container');
+                if (productItem) {
+                    const productIndex = Array.from(produtosContainer.querySelectorAll('.produtos-container')).indexOf(productItem);
+                    openPopup(products[productIndex]); // Usar o índice no array de produtos
+                }
+            });
+            const closePopup = document.getElementById('close-popup');
+            closePopup.addEventListener('click', () => {
+                const popup = document.getElementById('popup');
+                popup.style.display = 'none';
+            });
+        });
+    </script>
+</body>
+
+</html>
